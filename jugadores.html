@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Players</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input {
+            margin: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Buscar Jugadores</h2>
+
+<input type="text" id="searchName" onkeyup="searchFunction('name')" placeholder="Search for names..">
+<input type="number" id="searchAge" onkeyup="searchFunction('age')" placeholder="Search for age..">
+<input type="number" id="searchHandicap" onkeyup="searchFunction('handicap')" placeholder="Search for handicap..">
+
+<table id="playersTable">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Handicap</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows will be populated by JavaScript -->
+    </tbody>
+</table>
+
+<script src="players.js"></script>
+
+</body>
+</html>
