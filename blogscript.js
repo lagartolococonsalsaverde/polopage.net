@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://polopage.net';
 
 let questions = [];
 let expandedQuestions = new Set();
