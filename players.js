@@ -12651,28 +12651,53 @@ function populateTable() {
     });
 }
 
+
 function searchFunction(field) {
-    let input, filter, table, tr, td, i, txtValue;
-    if (field === 'name') {
-        input = document.getElementById("searchName");
-    } else if (field === 'age') {
-        input = document.getElementById("searchAge");
-    } else if (field === 'handicap') {
-        input = document.getElementById("searchHandicap");
+    let input, filter, table, tr, i, txtValue;
+    let ageFilter = document.getElementById("searchAge").value.toUpperCase();
+    let handicapFilter = document.getElementById("searchHandicap").value.toUpperCase();
+    
+    // For single field searches
+    if (field !== 'ageAndHandicap') {
+        if (field === 'name') {
+            input = document.getElementById("searchName");
+        } else if (field === 'age') {
+            input = document.getElementById("searchAge");
+        } else if (field === 'handicap') {
+            input = document.getElementById("searchHandicap");
+        }
+        filter = input.value.toUpperCase();
     }
-    filter = input.value.toUpperCase();
+
     table = document.getElementById("playersTable");
     tr = table.getElementsByTagName("tr");
+    
     for (i = 1; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[field === 'name' ? 0 : (field === 'age' ? 1 : 2)];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+        let shouldShow = false;
+        
+        if (field === 'ageAndHandicap') {
+            // Handle combined age and handicap search
+            let ageTd = tr[i].getElementsByTagName("td")[1];
+            let handicapTd = tr[i].getElementsByTagName("td")[2];
+            
+            if (ageTd && handicapTd) {
+                let ageValue = ageTd.textContent || ageTd.innerText;
+                let handicapValue = handicapTd.textContent || handicapTd.innerText;
+                
+                // Show row only if both conditions are met (or if respective filter is empty)
+                shouldShow = (ageFilter === '' || ageValue.toUpperCase().indexOf(ageFilter) > -1) &&
+                           (handicapFilter === '' || handicapValue.toUpperCase().indexOf(handicapFilter) > -1);
+            }
+        } else {
+            // Handle single field search
+            let td = tr[i].getElementsByTagName("td")[field === 'name' ? 0 : (field === 'age' ? 1 : 2)];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                shouldShow = txtValue.toUpperCase().indexOf(filter) > -1;
             }
         }
+        
+        tr[i].style.display = shouldShow ? "" : "none";
     }
 }
 
